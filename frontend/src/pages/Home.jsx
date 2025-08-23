@@ -2,7 +2,7 @@ import React from 'react'
 
 const Home = () => {
   return (
-    <section id='home' className='h-screen bg-gradient-to-bl from-white to-sky px-4'>
+    <section id='home' className='h-screen bg-gradient-to-bl from-white to-sky px-4 border-b border-gray-300'>
       <div className='flex flex-col md:flex-row justify-center items-center h-full gap-8 max-w-6xl w-full mx-auto'>
 
         <div className='w-full md:w-1/2 flex flex-col justify-center items-center md:items-start text-center md:text-left'>

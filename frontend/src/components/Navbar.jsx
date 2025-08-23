@@ -7,9 +7,10 @@ const Navbar = () => {
   return (
     <nav className='fixed top-0 left-0 z-50 w-full backdrop-blur-md bg-gradient-to-r from-white to-sky'>
       <div className='flex justify-between items-center max-w-6xl mx-auto px-4 py-3'>
-        
-        <h1 className='text-xl font-roboto font-semibold'>JobFit-AI</h1>
-
+        <div className='flex items-center'>
+          <img width={70} src="/logo.png" alt="" />
+          <h1 className='text-xl font-roboto font-semibold'>JobFit-AI</h1>
+        </div>
         <div className='hidden md:flex items-center gap-6'>
           <a href="#home" className='hover:text-blue-500'>Home</a>
           <a href="#about" className='hover:text-blue-500'>About</a>

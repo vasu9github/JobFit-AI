@@ -11,3 +11,6 @@
   @apply flex justify-center min-h-screen md:max-w-6xl px-6 w-full max-md:px-2 mx-auto 
 }
 
+body{
+  scroll-behavior: smooth;
+}
