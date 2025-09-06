@@ -1,4 +1,5 @@
 import React from 'react';
+import { BACKEND_URL } from '../api.js'; 
 
 const GoogleIcon = () => (
     <svg className="w-5 h-5 mr-3" viewBox="0 0 48 48">
@@ -10,7 +11,7 @@ const GoogleIcon = () => (
 );
 
 export default function AuthPage() {
-    const googleLoginUrl = 'http://localhost:5000/api/auth/google';
+    const googleLoginUrl = `${BACKEND_URL}/api/auth/google`;
 
     return (
         <section className="bg-gradient-to-br from-white to-sky-100 font-sans min-h-screen flex items-center justify-center p-4">
