@@ -15,13 +15,14 @@ export const AuthProvider = ({ children }) => {
             setUser(JSON.parse(storedUser));
         }
     }, []);
-    
+
     const login = useCallback((userData, authToken) => {
         setToken(authToken);
         setUser(userData);
         localStorage.setItem('authToken', authToken);
         localStorage.setItem('authUser', JSON.stringify(userData));
-    }, []); 
+    }, []);
+
     const logout = useCallback(() => {
         setToken(null);
         setUser(null);
