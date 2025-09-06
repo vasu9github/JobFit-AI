@@ -1,58 +1,78 @@
-import React, { useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import React, { useState, useContext } from 'react'; 
+import { Menu, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext'; 
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const { user, logout } = useContext(AuthContext); 
+    const navigate = useNavigate();
 
-  return (
-    <nav className='fixed top-0 left-0 z-50 w-full backdrop-blur-md bg-gradient-to-r from-white to-sky'>
-      <div className='flex justify-between items-center max-w-6xl mx-auto px-4 py-3'>
-        <div className='flex items-center'>
-          <img width={70} src="/logo.png" alt="" />
-          <h1 className='text-xl font-roboto font-semibold'>JobFit-AI</h1>
-        </div>
-        <div className='hidden md:flex items-center gap-6'>
-          <a href="#home" className='hover:text-blue-500'>Home</a>
-          <a href="#about" className='hover:text-blue-500'>About</a>
-          <a href="#services" className='hover:text-blue-500'>Services</a>
-          <a href="#contact" className='hover:text-blue-500'>Contact</a>
-          <button className='px-3 py-1.5 bg-blue-500 text-white rounded active:scale-90 transition-all duration-300 shadow-sm hover:bg-blue-600'>
-            Login/Signup
-          </button>
-        </div>
+    const handleLogout = () => {
+        logout(); 
+        navigate('/auth');
+    };
 
-        <button
-          className='md:hidden text-gray-700'
-          onClick={() => setIsOpen(true)}
-        >
-          <Menu size={28} />
-        </button>
-      </div>
+    return (
+        <nav className='fixed top-0 left-0 z-50 w-full backdrop-blur-md bg-gradient-to-r from-white to-sky-50/80 border-b border-gray-200'>
+            <div className='flex justify-between items-center max-w-6xl mx-auto px-4 py-3'>
+                <Link className='flex items-center' to={'/'}>
+                    <img width={70} src="/logo.png" alt="JobFit-AI Logo" />
+                    <h1 className='text-xl font-roboto font-semibold'>JobFit-AI</h1>
+                </Link>
 
-      <div
-        className={`fixed top-0 right-0 h-screen w-2/3 bg-gradient-to-b from-white to-sky shadow-lg transform transition-transform duration-500 ease-in-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        } md:hidden flex flex-col pt-6`}
-      >
+                {/* Dekstop view */}
+                <div className='hidden md:flex items-center gap-6'>
+                    <a href="/#home" className='hover:text-blue-500'>Home</a>
+                    <a href="/#about" className='hover:text-blue-500'>About</a>
+                    {user ? (
+                        <>
+                            <Link to="/chat" className='hover:text-blue-500'>Analyzer</Link>
+                            <button
+                                onClick={handleLogout}
+                                className='px-3 py-1.5 bg-red-500 text-white rounded active:scale-90 transition-all duration-300 shadow-sm hover:bg-red-600'
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <Link to={'/auth'}>
+                            <button className='px-3 py-1.5 bg-blue-500 text-white rounded active:scale-90 transition-all duration-300 shadow-sm hover:bg-blue-600'>
+                                Login/Signup
+                            </button>
+                        </Link>
+                    )}
+                </div>
 
-        <div className="flex justify-end pr-6">
-          <button onClick={() => setIsOpen(false)} className="text-gray-700">
-            <X size={28} />
-          </button>
-        </div>
+                {/* mobile view */}
+                <button className='md:hidden text-gray-700' onClick={() => setIsOpen(!isOpen)}>
+                    {isOpen ? <X size={28} /> : <Menu size={28} />}
+                </button>
+            </div>
+            {isOpen && (
+                <div className="md:hidden flex flex-col items-center gap-6 py-8 bg-white/95 backdrop-blur-md">
+                    <a href="/#home" onClick={() => setIsOpen(false)} className='hover:text-blue-500 font-roboto text-lg'>Home</a>
+                    <a href="/#about" onClick={() => setIsOpen(false)} className='hover:text-blue-500 font-roboto text-lg'>About</a>
+                    
+                    {user ? (
+                        <>
+                            <Link to="/chat" onClick={() => setIsOpen(false)} className='hover:text-blue-500 font-roboto text-lg'>Analyzer</Link>
+                            <button onClick={() => { handleLogout(); setIsOpen(false); }} className='px-4 py-2 bg-red-500 text-white rounded-lg shadow-sm'>
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <Link to={'/auth'} onClick={() => setIsOpen(false)}>
+                            <button className='px-4 py-2 bg-blue-500 text-white rounded-lg shadow-sm'>
+                                Login/Signup
+                            </button>
+                        </Link>
+                    )}
+                </div>
+            )}
+        </nav>
+    );
+};
 
-        <div className="flex flex-col items-center gap-6 mt-10">
-          <a href="#home" onClick={() => setIsOpen(false)} className='hover:text-blue-500 font-roboto text-lg'>Home</a>
-          <a href="#about" onClick={() => setIsOpen(false)} className='hover:text-blue-500 font-roboto text-lg'>About</a>
-          <a href="#services" onClick={() => setIsOpen(false)} className='hover:text-blue-500 font-roboto text-lg'>Services</a>
-          <a href="#contact" onClick={() => setIsOpen(false)} className='hover:text-blue-500 font-roboto text-lg'>Contact</a>
-          <button className='px-3 py-1.5 bg-blue-500 text-white rounded active:scale-90 transition-all duration-300 shadow-sm hover:bg-blue-600'>
-            Login/Signup
-          </button>
-        </div>
-      </div>
-    </nav>
-  )
-}
+export default Navbar;
 
-export default Navbar

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 const Home = () => {
   return (
     <section id='home' className='h-screen bg-gradient-to-bl from-white to-sky px-4 border-b border-gray-300'>
@@ -11,9 +11,11 @@ const Home = () => {
           </h1>
 
           <div className='mt-6'>
-            <button className='px-6 py-2 bg-blue-500 text-white rounded active:scale-90 transition-all duration-300 text-shadow-2xs shadow-sm hover:bg-blue-600'>
-              Explore JobFit
-            </button>
+            <Link to={'/chat'}>
+              <button className='px-6 py-2 bg-blue-500 text-white rounded active:scale-90 transition-all duration-300 text-shadow-2xs shadow-sm hover:bg-blue-600'>
+                Explore JobFit
+              </button>
+            </Link>
 
             <div className='mt-4 space-y-1 text-sm md:text-base'>
               <p className='text-gray-500'>✅ 39% more likely to land the job</p>

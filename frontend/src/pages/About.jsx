@@ -22,7 +22,7 @@ const features = [
 const About = () => {
   return (
 
-    <section className="bg-gradient-to-bl from-white to-sky-100 py-20">
+    <section id='about' className="bg-gradient-to-bl from-white to-sky-100 py-20">
       <div className="container mx-auto px-4">
         <div>
           <h1 className="mt-10 text-2xl md:text-4xl text-gray-800 text-center font-bold font-roboto">
