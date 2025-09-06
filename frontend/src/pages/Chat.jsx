@@ -121,7 +121,7 @@ const Chat = () => {
     const renderAnalysisResult = () => {
         if (isLoading) {
             return (
-                <div className="text-center p-8 flex flex-col justify-center items-center h-full min-h-[400px]">
+                <div className="text-center p-8 flex flex-col justify-center items-center h-full min-h-[400px] bg-linear-to-br from-white to-sky">
                     <Loader2 className="w-12 h-12 text-blue-500 animate-spin mx-auto" />
                     <p className="mt-4 text-lg font-semibold text-gray-600">Our AI is analyzing your resume...</p>
                 </div>
@@ -130,7 +130,7 @@ const Chat = () => {
 
         if (!analysisResult) {
             return (
-                <div className="text-center text-gray-500 p-8 flex flex-col justify-center items-center h-full min-h-[400px]">
+                <div className="text-center text-gray-500 p-8 flex flex-col justify-center items-center h-full min-h-[400px] bg-linear-to-br from-white to-sky">
                     <FileText className="w-16 h-16 mx-auto mb-4 opacity-50" />
                     <h3 className="text-xl font-bold text-gray-800">Your Analysis Will Appear Here</h3>
                 </div>
@@ -141,7 +141,7 @@ const Chat = () => {
         const scoreColor = score >= 80 ? 'text-green-500' : score >= 60 ? 'text-yellow-500' : 'text-red-500';
 
         return (
-            <div className="w-full animate-fade-in p-6 md:p-8">
+            <div className="w-full animate-fade-in p-6 md:p-8 bg-linear-to-br from-white to-sky">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Analysis Complete!</h2>
                 <div className="text-center mb-8">
                     <p className="text-gray-600">Your JobFit Score is:</p>
@@ -168,7 +168,7 @@ const Chat = () => {
     };
 
     return (
-        <div className='bg-gray-50 min-h-screen w-full flex flex-col items-center justify-center py-20 px-4'>
+        <div className='bg-gray-50 min-h-screen w-full flex flex-col items-center justify-center py-20 px-4 bg-linear-to-br from-white to-sky'>
             <div className="w-full max-w-6xl">
                 <header className='text-center mb-12'>
                     <h1 className='text-4xl md:text-5xl font-semibold text-gray-800'>Resume Analyzer</h1>

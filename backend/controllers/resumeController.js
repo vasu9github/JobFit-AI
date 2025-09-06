@@ -1,6 +1,4 @@
 import AnalysisHistory from '../models/analysisHistoryModel.js';
-
-// This helper function to call the AI is correct and needs no changes.
 async function callGeminiAPI(resumeText, jobDescription) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -60,9 +58,7 @@ async function callGeminiAPI(resumeText, jobDescription) {
     }
 }
 
-// --- THIS IS THE CORRECTED FUNCTION ---
 export const analyzeResume = async (req, res) => {
-    // The userId is correctly attached by the middleware, so we can access it here.
     const userId = req.userId; 
     const { resumeText, jobDescription, jobTitle } = req.body;
 
