@@ -1,7 +1,11 @@
 import AnalysisHistory from '../models/analysisHistoryModel.js';
 
+// This helper function to call the AI is correct and needs no changes.
 async function callGeminiAPI(resumeText, jobDescription) {
     const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+        throw new Error("GEMINI_API_KEY is not defined in the .env file.");
+    }
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
     
     const prompt = `
@@ -25,9 +29,7 @@ async function callGeminiAPI(resumeText, jobDescription) {
         ---
     `;
 
-    const payload = {
-        contents: [{ parts: [{ text: prompt }] }],
-    };
+    const payload = { contents: [{ parts: [{ text: prompt }] }] };
 
     try {
         const response = await fetch(url, {
@@ -36,25 +38,32 @@ async function callGeminiAPI(resumeText, jobDescription) {
             body: JSON.stringify(payload)
         });
 
+        const responseData = await response.json();
+
         if (!response.ok) {
+            console.error("Gemini API Error Response:", responseData);
             throw new Error(`API call failed with status: ${response.status}`);
         }
 
-        const data = await response.json();
-        const rawText = data.candidates[0].content.parts[0].text;
-        
+        if (!responseData.candidates || responseData.candidates.length === 0) {
+            console.error("Gemini API did not return any candidates:", responseData);
+            throw new Error("AI analysis did not return a valid response.");
+        }
+
+        const rawText = responseData.candidates[0].content.parts[0].text;
         const jsonText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
         return JSON.parse(jsonText);
 
     } catch (error) {
-        console.error("Error calling Gemini API:", error);
+        console.error("Error inside callGeminiAPI function:", error);
         throw new Error("Failed to get analysis from AI.");
     }
 }
 
-
+// --- THIS IS THE CORRECTED FUNCTION ---
 export const analyzeResume = async (req, res) => {
-    const userId = req.userId;
+    // The userId is correctly attached by the middleware, so we can access it here.
+    const userId = req.userId; 
     const { resumeText, jobDescription, jobTitle } = req.body;
 
     if (!resumeText || !jobDescription || !jobTitle) {
@@ -63,6 +72,7 @@ export const analyzeResume = async (req, res) => {
 
     try {
         const analysisResult = await callGeminiAPI(resumeText, jobDescription);
+
         const newHistoryItem = new AnalysisHistory({
             user: userId,
             jobTitle,
@@ -70,10 +80,11 @@ export const analyzeResume = async (req, res) => {
             analysisResult 
         });
         await newHistoryItem.save();
+        
         res.status(200).json(analysisResult);
 
     } catch (error) {
-        console.error(error);
+        console.error("Server error during resume analysis:", error);
         res.status(500).json({ message: "Server error during resume analysis." });
     }
 };
@@ -83,7 +94,8 @@ export const getAnalysisHistory = async (req, res) => {
         const history = await AnalysisHistory.find({ user: req.userId }).sort({ createdAt: -1 });
         res.status(200).json(history);
     } catch (error) {
-        console.error(error);
+        console.error("Server error while fetching history:", error);
         res.status(500).json({ message: "Server error while fetching history." });
     }
 };
+
