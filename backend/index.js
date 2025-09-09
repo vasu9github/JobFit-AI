@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use('/api/auth', authRoutes);
 app.use('/api/resume', resumeRoutes);
-app.use('api/ping', pingRoutes)
+app.use('/api/ping', pingRoutes)
 
 app.listen(PORT, () => console.log(`Server is live at port: ${PORT}`));
 
