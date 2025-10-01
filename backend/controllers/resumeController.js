@@ -5,7 +5,8 @@ async function callGeminiAPI(resumeText, jobDescription) {
     if (!apiKey) {
         throw new Error("GEMINI_API_KEY is not defined in the .env file.");
     }
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.0-pro-latest:generateContent?key=${apiKey}`; // Changing the model temporarily
+    // const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
     
     const prompt = `
         Analyze the following resume against the provided job description.
