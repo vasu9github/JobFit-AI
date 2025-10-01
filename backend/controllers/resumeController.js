@@ -1,12 +1,10 @@
 import AnalysisHistory from '../models/analysisHistoryModel.js';
-
 async function callGeminiAPI(resumeText, jobDescription) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
         throw new Error("GEMINI_API_KEY is not defined in the .env file.");
     }
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.0-pro-latest:generateContent?key=${apiKey}`; // Changing the model temporarily
-    // const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
     
     const prompt = `
         Analyze the following resume against the provided job description.
@@ -96,3 +94,4 @@ export const getAnalysisHistory = async (req, res) => {
         res.status(500).json({ message: "Server error while fetching history." });
     }
 };
+
