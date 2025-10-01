@@ -104,7 +104,7 @@ async function callCerebrasAPI(resumeText, jobDescription) {
         throw new Error("CEREBRAS_API_KEY is not defined in the .env file.");
     }
 
-    const url = 'https://api.cerebras.net/v1/chat/completions'; 
+    const url = 'https://api.cerebras.com/v1/chat/completions';
 
     const prompt = `
         Analyze the following resume against the provided job description.
@@ -126,9 +126,9 @@ async function callCerebrasAPI(resumeText, jobDescription) {
         ${jobDescription}
         ---
     `;
-    
+
     const payload = {
-        model: "BTLM-3B-8K", 
+        model: "BTLM-3B-8K",
         messages: [
             { role: "system", content: "You are a helpful AI assistant that provides analysis in JSON format." },
             { role: "user", content: prompt }
@@ -200,4 +200,3 @@ export const getAnalysisHistory = async (req, res) => {
         res.status(500).json({ message: "Server error while fetching history." });
     }
 };
-
