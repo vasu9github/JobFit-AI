@@ -4,10 +4,8 @@ async function callGeminiAPI(resumeText, jobDescription) {
     if (!apiKey) {
         throw new Error("GEMINI_API_KEY is not defined in the .env file.");
     }
-    // temporary chaging the url to point to a different model for testing
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
-    // const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-
+    
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
     const prompt = `
         Analyze the following resume against the provided job description.
         Provide a detailed analysis in a strict JSON format. Do not include any text outside of the JSON object.
@@ -96,5 +94,3 @@ export const getAnalysisHistory = async (req, res) => {
         res.status(500).json({ message: "Server error while fetching history." });
     }
 };
-
-
